@@ -9,25 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    func checkPrimeWith(value number: Int) -> Bool {
-        if number <= 1 {
-            return false
-        }
-        
-        if number <= 3 {
-            return true
-        }
-        
-        //for (i = 2; i <= n/2; i++)
-        for i in 2...(number/2) {
-            if number % i == 0 {
-                return false
-            }
-        }
-        
-        return true
-    }
+    var calculatorBrain = VerificarePrim()
     
     @IBOutlet weak var statusLabel: UILabel!
     
@@ -35,18 +17,23 @@ class ViewController: UIViewController {
     
     @IBAction func onTap(_ sender: UIButton) {
         if let n = textField.text {
-            if let number: Int = Int(n) {
-                if checkPrimeWith(value: number){
-                    statusLabel.text = "Prim"
-                }
-                else {
-                    statusLabel.text = "Neprim"
-                }
-                
+            calculatorBrain.value = Int(n)
+            updateUI()
+        }
+    }
+    
+    func updateUI() {
+        if calculatorBrain.status != nil {
+            if calculatorBrain.status == true {
+                statusLabel.text = "Prim"
             }
             else {
-                statusLabel.text = "Nu este numar"
+                statusLabel.text = "Neprim"
             }
+            
+        }
+        else {
+            statusLabel.text = "Nu este numar"
         }
     }
 }
